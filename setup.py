@@ -7,6 +7,20 @@ setup(
     author_email='syphar@fastmail.fm',
     version='0.1.0',
     py_modules=['pytest_translations'],
+    license='BSD',
+    url='https://github.com/thermondo/pytest-translations',
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Natural Language :: English',
+        "Programming Language :: Python :: 2",
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+    ],
     entry_points={
         'pytest11': [
             'pytest_translations = pytest_translations',
