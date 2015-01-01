@@ -2,8 +2,9 @@
 pytest-translations
 ===============================
 
-.. image:: https://badge.fury.io/py/pytest-translations.png
-    :target: http://badge.fury.io/py/pytest-translations
+.. image:: https://pypip.in/version/pytest-translations/badge.svg
+    :target: https://pypi.python.org/pypi/pytest-translations/
+    :alt: Latest Version
 
 .. image:: https://api.travis-ci.org/Thermondo/pytest-translations.png?branch=master
         :target: https://travis-ci.org/Thermondo/pytest-translations
