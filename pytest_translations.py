@@ -1,9 +1,9 @@
-from __future__ import (absolute_import, unicode_literals, division,
-                        print_function)
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
 import os
-import tempfile
 import shutil
+import tempfile
 
 from py.test.collect import File, Item
 
