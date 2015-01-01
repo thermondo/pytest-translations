@@ -5,8 +5,8 @@ pytest-translations
 .. image:: https://badge.fury.io/py/pytest-translations.png
     :target: http://badge.fury.io/py/pytest-translations
 
-.. image:: https://travis-ci.org/thermondo/pytest-translations.png?branch=master
-        :target: https://travis-ci.org/thermondo/pytest-translations
+.. image:: https://api.travis-ci.org/Thermondo/pytest-translations.png?branch=master
+        :target: https://travis-ci.org/Thermondo/pytest-translations
 
 .. image:: https://pypip.in/d/pytest-translations/badge.png
         :target: https://pypi.python.org/pypi/pytest-translations
