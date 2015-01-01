@@ -11,17 +11,28 @@ from py.test.collect import File, Item
 MARKER_NAME = 'translations'
 
 
+def pytest_addoption(parser):
+    group = parser.getgroup("general")
+    group.addoption(
+        '--translations',
+        action='store_true',
+        help="perform some checks on .mo and .po files"
+    )
+
+
 def pytest_collect_file(path, parent):
-    if path.ext == '.mo':
-        return MoFileItem(
-            path,
-            parent=parent
-        )
-    elif path.ext == '.po':
-        return PoFile(
-            path,
-            parent=parent
-        )
+    config = parent.config
+    if config.option.translations:
+        if path.ext == '.mo':
+            return MoFileItem(
+                path,
+                parent=parent
+            )
+        elif path.ext == '.po':
+            return PoFile(
+                path,
+                parent=parent
+            )
 
 
 def _msgfmt(i):
