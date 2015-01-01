@@ -37,7 +37,7 @@ def pytest_collect_file(path, parent):
 
 
 def _msgfmt(i):
-    return '"{}": "{}"'.format(
+    return '"{0}": "{1}"'.format(
         i.msgid,
         i.msgstr,
     )
@@ -56,7 +56,7 @@ class PoBaseItem(Item):
         if isinstance(excinfo.value, TranslationException):
             msg, wrong = excinfo.value.args
 
-            msg += "\n{}".format(self.fspath)
+            msg += "\n{0}".format(self.fspath)
 
             msg += '\n' + '\n'.join(
                 _msgfmt(i)
@@ -208,7 +208,7 @@ class MoFileItem(Item, File):
             msg, diff = excinfo.value.args
 
             msg += '\n' + '\n'.join(
-                '{} -> {}'.format(
+                '{0} -> {1}'.format(
                     _msgfmt(l),
                     _msgfmt(r),
                 )
