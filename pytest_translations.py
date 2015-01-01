@@ -43,6 +43,30 @@ def _msgfmt(i):
     )
 
 
+def _open_po_file(fn):
+    import polib
+
+    try:
+        return polib.pofile(str(fn))
+    except Exception as e:
+        raise TranslationException(
+            str(e),
+            [],
+        )
+
+
+def _open_mo_file(fn):
+    import polib
+
+    try:
+        return polib.mofile(str(fn))
+    except Exception as e:
+        raise TranslationException(
+            str(e),
+            [],
+        )
+
+
 class TranslationException(Exception):
     pass
 
@@ -71,8 +95,7 @@ class PoBaseItem(Item):
 
 class PoUntranslatedItem(PoBaseItem):
     def runtest(self):
-        import polib
-        parsed = polib.pofile(str(self.fspath))
+        parsed = _open_po_file(self.fspath)
 
         untranslated = parsed.untranslated_entries()
 
@@ -90,8 +113,7 @@ class PoUntranslatedItem(PoBaseItem):
 
 class PoObsoleteItem(PoBaseItem):
     def runtest(self):
-        import polib
-        parsed = polib.pofile(str(self.fspath))
+        parsed = _open_po_file(self.fspath)
 
         obsolete = parsed.obsolete_entries()
 
@@ -109,8 +131,7 @@ class PoObsoleteItem(PoBaseItem):
 
 class PoFuzzyItem(PoBaseItem):
     def runtest(self):
-        import polib
-        parsed = polib.pofile(str(self.fspath))
+        parsed = _open_po_file(self.fspath)
 
         fuzzy = parsed.fuzzy_entries()
 
@@ -160,11 +181,16 @@ class MoFileItem(Item, File):
             self.keywords[MARKER_NAME] = True
 
     def runtest(self):
-        import polib
         po_path, _ = os.path.splitext(str(self.fspath))
         po_path = po_path + ".po"
 
-        po_file = polib.pofile(po_path)
+        if not os.path.exists(po_path):
+            raise TranslationException(
+                "corresponding .po file does not exist",
+                []
+            )
+
+        po_file = _open_po_file(po_path)
 
         temp_dir = tempfile.mkdtemp()
 
@@ -172,8 +198,8 @@ class MoFileItem(Item, File):
             test_file = os.path.join(temp_dir, 'test.mo')
             po_file.save_as_mofile(test_file)
 
-            original_parsed = polib.mofile(str(self.fspath))
-            test_parsed = polib.mofile(test_file)
+            original_parsed = _open_mo_file(self.fspath)
+            test_parsed = _open_mo_file(test_file)
 
             if len(original_parsed) != len(test_parsed):
                 raise TranslationException(
