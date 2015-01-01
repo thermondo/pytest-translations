@@ -3,6 +3,7 @@ from setuptools import setup
 setup(
     name='pytest-translations',
     description='Test your translation files',
+    long_description=open("README.rst").read(),
     author='Denis Cornehl',
     author_email='syphar@fastmail.fm',
     version='0.1.0',
