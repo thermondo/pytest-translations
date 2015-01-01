@@ -7,7 +7,7 @@ import tempfile
 
 from py.test.collect import File, Item
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 MARKER_NAME = 'translations'
 

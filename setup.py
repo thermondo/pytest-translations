@@ -6,7 +6,7 @@ setup(
     long_description=open("README.rst").read(),
     author='Denis Cornehl',
     author_email='syphar@fastmail.fm',
-    version='0.1.0',
+    version='0.2.0',
     py_modules=['pytest_translations'],
     license='MIT',
     url='https://github.com/thermondo/pytest-translations',
