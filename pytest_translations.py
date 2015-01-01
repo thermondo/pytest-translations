@@ -7,6 +7,7 @@ import shutil
 
 from py.test.collect import File, Item
 
+__version__ = '0.1.0'
 
 MARKER_NAME = 'translations'
 
