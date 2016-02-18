@@ -4,6 +4,7 @@ import os
 import polib
 import pytest
 
+
 pytest_plugins = "pytester",
 
 
@@ -50,16 +51,16 @@ class TestMo(object):
         result = testdir.runpytest("--translations")
         assert result.ret == 1
         result.stdout.fnmatch_lines([
-            "*collected 4*",
+            "*collected 5*",
             "*Invalid mo file*",
-            "*1 failed*3 passed*",
+            "*1 failed*",
         ])
 
     def test_ok(self, testdir, pomo):
-        result = testdir.runpytest("--translations")
+        result = testdir.runpytest("--translations", '-vvv')
         assert result.ret == 0
         result.stdout.fnmatch_lines([
-            "*collected 4*",
+            "*collected 5*",
             "*4 passed*",
         ])
 
@@ -67,7 +68,7 @@ class TestMo(object):
         po, mo = pomo
         os.unlink(po)
 
-        result = testdir.runpytest("--translations")
+        result = testdir.runpytest("--translations", '-vvv')
         assert result.ret == 1
         result.stdout.fnmatch_lines([
             "*collected 1*",
@@ -82,19 +83,22 @@ class TestMo(object):
         testdir.makefile(
             'po',
             """
+            msgid ""
+            msgstr ""
+            "Language: de\n"
+
             #: asdf.py:111
             msgid "bike"
             msgstr "Fahrrad"
             """
         )
 
-        result = testdir.runpytest("--translations")
+        result = testdir.runpytest("--translations", '-vvv')
         assert result.ret == 1
         result.stdout.fnmatch_lines([
-            "*collected 4*",
+            "*collected 5*",
             "*mo*file content does not match po*",
             "*bike*Fahrrad*",
-            "*1 failed*3 passed*",
         ])
 
 
@@ -109,7 +113,6 @@ class TestPo(object):
             """
         )
         result = testdir.runpytest()
-        assert result.ret == 0
         result.stdout.fnmatch_lines([
             "*collected 0*",
         ])
@@ -121,12 +124,10 @@ class TestPo(object):
             asdflkaj sdlkfaj
             """
         )
-        result = testdir.runpytest('--translations')
+        result = testdir.runpytest('--translations', '-vvv')
         assert result.ret == 1
         result.stdout.fnmatch_lines([
-            "*collected 3*",
             "*Syntax error*",
-            "*3 failed*",
         ])
 
     def test_valid(self, testdir):
@@ -138,10 +139,10 @@ class TestPo(object):
             msgstr "Auto"
             """
         )
-        result = testdir.runpytest('--translations')
+        result = testdir.runpytest('--translations', '-vvv')
         assert result.ret == 0
         result.stdout.fnmatch_lines([
-            "*collected 3*",
+            "*collected 4*",
             "*3 passed*",
         ])
 
@@ -154,7 +155,7 @@ class TestPo(object):
             msgstr ""
             """
         )
-        result = testdir.runpytest('--translations')
+        result = testdir.runpytest('--translations', '-vvv')
         assert result.ret == 1
         result.stdout.fnmatch_lines([
             "*collected 3*",
@@ -171,7 +172,7 @@ class TestPo(object):
             msgstr "Auto"
             """
         )
-        result = testdir.runpytest('--translations')
+        result = testdir.runpytest('--translations', '-vvv')
         assert result.ret == 1
         result.stdout.fnmatch_lines([
             "*collected 3*",
@@ -188,7 +189,7 @@ class TestPo(object):
             #~ msgstr "Auto"
             """
         )
-        result = testdir.runpytest('--translations')
+        result = testdir.runpytest('--translations', '-vvv')
         assert result.ret == 1
         result.stdout.fnmatch_lines([
             "*collected 3*",
@@ -214,7 +215,7 @@ class TestPo(object):
             #~ msgstr "Auto"
             """
         )
-        result = testdir.runpytest('--translations')
+        result = testdir.runpytest('--translations', '-vvv')
         assert result.ret == 1
         result.stdout.fnmatch_lines([
             "*collected 3*",
@@ -222,4 +223,142 @@ class TestPo(object):
             "*fuzzy*",
             "*obsolete*",
             "*3 failed*",
+        ])
+
+
+class TestPoSpellcheck(object):
+    def test_broken_file(self, testdir):
+        testdir.makefile(
+            'po',
+            """
+            asdflkjasdf laskdjfasdf
+            """
+        )
+        result = testdir.runpytest('--translations', '-vvv', '-r', 's')
+        result.stdout.fnmatch_lines([
+            "*collected 3*",
+        ])
+
+    def test_language_missing_in_po(self, testdir):
+        testdir.makefile(
+            'po',
+            """
+            #: asdf.py:111
+            msgid "meeting"
+            msgstr "meeeting"
+            """
+        )
+        result = testdir.runpytest('--translations', '-vvv', '-r', 's')
+        result.stdout.fnmatch_lines([
+            "*collected 4*",
+            "SKIP * no language defined in PO file",
+        ])
+
+    def test_language_catalog_missing(self, testdir):
+        testdir.makefile(
+            'po',
+            """
+            msgid ""
+            msgstr ""
+            "Language: hr\\n"
+
+            #: asdf.py:111
+            msgid "meeting"
+            msgstr "meeeting"
+            """
+        )
+        result = testdir.runpytest('--translations', '-vvv', '-r', 's')
+        result.stdout.fnmatch_lines([
+            "*collected 4*",
+            "SKIP * aspell dictionary for language hr not found*",
+        ])
+
+    def test_python_format_placeholders(self, testdir):
+        testdir.makefile(
+            'po',
+            """
+            msgid ""
+            msgstr ""
+            "Language: de\\n"
+
+            #: asdf.py:111
+            msgid "meeting"
+            msgstr "Langer Text %(salkdjfalsdjf)s {kaksjsalkas} Verabredung"
+            """
+        )
+        result = testdir.runpytest('--translations', '-vvv', '-r', 's')
+        result.stdout.fnmatch_lines([
+            "*collected 4*",
+            "*4 passed*",
+        ])
+
+    def test_pass(self, testdir):
+        testdir.makefile(
+            'po',
+            """
+            msgid ""
+            msgstr ""
+            "Language: de\\n"
+
+            #: asdf.py:111
+            msgid "meeting"
+            msgstr "Verabredung"
+            """
+        )
+        result = testdir.runpytest('--translations', '-vvv', '-r', 's')
+        result.stdout.fnmatch_lines([
+            "*collected 4*",
+            "*4 passed*",
+        ])
+
+    def test_fail(self, testdir):
+        testdir.makefile(
+            'po',
+            """
+            msgid ""
+            msgstr ""
+            "Language: de\\n"
+
+            #: asdf.py:111
+            msgid "meeting"
+            msgstr "meeeting"
+            """
+        )
+        result = testdir.runpytest('--translations', '-vvv', '-r', 's')
+        result.stdout.fnmatch_lines([
+            "*collected 4*",
+            '*Spell checking failed:*',
+            '*msgstr "meeeting"*',
+            "*1 failed*",
+        ])
+
+    def test_wordlist(self, testdir, monkeypatch):
+        testdir.makefile(
+            'po',
+            """
+            msgid ""
+            msgstr ""
+            "Language: de\\n"
+
+            #: asdf.py:111
+            msgid "meeting"
+            msgstr "meeeting"
+            """
+        )
+
+        test_dir = str(testdir.tmpdir.dirpath())
+        wordlist_de = os.path.join(test_dir, 'de')
+        assert not os.path.exists(wordlist_de)
+
+        with open(wordlist_de, 'w+') as wl:
+            wl.write("meeeting\n")
+
+        monkeypatch.setenv('PYTEST_TRANSLATIONS_PRIVATE_WORD_LIST', test_dir)
+
+        assert os.path.exists(wordlist_de)
+
+        result = testdir.runpytest('--translations', '-vvv')
+        result.stdout.fnmatch_lines([
+            "*collected 4*",
+            "*4 passed*",
         ])

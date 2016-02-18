@@ -1,16 +1,24 @@
 language: python
 sudo: false
+cache:
+ - pip
+ - apt
 python:
-  - "2.6"
   - "2.7"
-  - "3.3"
   - "3.4"
-
-env:
-  - CONFIG="pip install pytest"
-
-install: 
-  - $CONFIG
-  - "python setup.py install"
-
-script: "py.test ."
+  - "3.5"
+addons:
+  apt:
+    packages:
+    - python-enchant
+    - python3-enchant
+    - aspell-en
+    - aspell-de
+install:
+  - pip install -U pip
+  - pip install -r requirements-dev.txt
+  - pip install -U coveralls
+script:
+  - coverage run --source="pytest_translations.py" -m "pytest"
+after_success:
+  - coveralls
