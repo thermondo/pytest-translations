@@ -46,7 +46,8 @@ addons:
 On Mac you can use brew to install:
 
 ```bash
-brew install enchant aspell --with-lang-{en|de|CHOSE YOUR LANGUAGE CODES}
+brew install aspell --with-lang-{en|de|CHOSE YOUR LANGUAGE CODES}
+brew install enchant
 ```
 
 ## Usage
