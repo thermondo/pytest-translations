@@ -2,9 +2,8 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from pytest_translations.mo_files import MoFileItem
-
-from pytest_translations.po_files import PoFile
+from .mo_files import MoFileItem
+from .po_files import PoFile
 
 __version__ = '1.0.0'
 
