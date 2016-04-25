@@ -1,15 +1,18 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
-from pytest_translations import __version__, __doc__
+
+PACKAGE = 'pytest_translations'
+VERSION = __import__(PACKAGE).__version__
+DOC = __import__(PACKAGE).__doc__
 
 setup(
     name='pytest-translations',
     description='Test your translation files',
     long_description=__doc__,
     author='Thermondo GmbH',
-    author_email='syphar@fastmail.fm',
-    version=__version__,
-    py_modules=['pytest_translations'],
+    author_email='denis.cornehl@gmail.com',
+    version=VERSION,
+    packages=find_packages(),
     license='MIT',
     url='https://github.com/thermondo/pytest-translations',
     download_url='https://github.com/thermondo/pytest-translations',
@@ -33,5 +36,6 @@ setup(
         'py>=1.3.0',
         'polib>=1.0.5',
         'pyenchant>=1.6.0',
-    ]
+    ],
+    zip_safe=False,
 )

@@ -5,7 +5,7 @@ from __future__ import (absolute_import, division, print_function,
 from .mo_files import MoFileItem
 from .po_files import PoFile
 
-__version__ = '1.0.1'
+__version__ = '1.0.3'
 
 
 def pytest_addoption(parser):
