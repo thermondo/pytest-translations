@@ -8,4 +8,4 @@
 polib==1.0.7
 py==1.4.31                # via pytest
 pyenchant==1.6.8
-pytest==3.0.0
+pytest==3.0.1
