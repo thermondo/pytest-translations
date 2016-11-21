@@ -5,7 +5,7 @@
 #    pip-compile requirements-dev.in
 #
 -e .
-polib==1.0.7
+polib==1.0.8
 py==1.4.31                # via pytest
 pyenchant==1.6.8
 pytest==3.0.4
