@@ -2,10 +2,8 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from .mo_files import MoFileItem
-from .po_files import PoFile
 
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 
 
 def pytest_addoption(parser):
@@ -18,6 +16,8 @@ def pytest_addoption(parser):
 
 
 def pytest_collect_file(path, parent):
+    from .mo_files import MoFileItem
+    from .po_files import PoFile
     config = parent.config
     if config.option.translations:
         if path.ext == '.mo':
