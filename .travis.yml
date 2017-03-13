@@ -1,12 +1,12 @@
 language: python
 sudo: false
 cache:
- - pip
- - apt
+- pip
+- apt
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
+- '2.7'
+- '3.4'
+- '3.5'
 addons:
   apt:
     packages:
@@ -15,10 +15,19 @@ addons:
     - aspell-en
     - aspell-de
 install:
-  - pip install -U pip
-  - pip install -r requirements-dev.txt
-  - pip install -U coveralls
+- pip install -U pip
+- pip install -r requirements-dev.txt
+- pip install -U coveralls
 script:
-  - coverage run --source="pytest_translations.py" -m "pytest"
+- coverage run --source="pytest_translations.py" -m "pytest"
 after_success:
-  - coveralls
+- coveralls
+deploy:
+  provider: pypi
+  user: codingjoe
+  password:
+    secure: bXxLJ3dcm3JPKOAbsF+cvClNuRNGNv2eKzhHrtbHOdPfvLnVk5V2i1F3bUv4GR1TPdYkvPWlJJCPWCEx9CfFkhWCV9usgB0+c4H1q0QumXfYmkHJ5vqGImozQBTq80YIDaW+V7575Me0Hev2v4LaulHcJ88xfqvgrlngxjZtPU4=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: Thermondo/pytest-translations
