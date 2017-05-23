@@ -48,9 +48,9 @@ class MoFileItem(Item, File):
 
             for l, r in zip(original_parsed, test_parsed):
                 if not (l.msgid == r.msgid and
-                                l.msgid_plural == r.msgid_plural and
-                                l.msgstr == r.msgstr and
-                                l.msgstr_plural == r.msgstr_plural
+                        l.msgid_plural == r.msgid_plural and
+                        l.msgstr == r.msgstr and
+                        l.msgstr_plural == r.msgstr_plural
                         ):
                     diff.append(
                         (l, r)
