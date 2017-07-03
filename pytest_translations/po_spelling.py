@@ -23,7 +23,7 @@ def is_enchant_installed():
 
 if enchant:
     supported_languages = [
-        name
+        name.split('_')[0]
         for name, _ in enchant.list_dicts()
     ]
 else:
