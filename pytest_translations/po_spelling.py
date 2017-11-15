@@ -1,8 +1,7 @@
 import os
 import re
 
-import pytest
-from py.test.collect import File, Item
+from pytest import Item, skip
 
 from pytest_translations.config import MARKER_NAME
 from pytest_translations.utils import TranslationException
@@ -63,13 +62,13 @@ class PoSpellCheckingItem(Item):
 
     def runtest(self):
         if not enchant:
-            pytest.skip("enchant is not installed")
+            skip("enchant is not installed")
 
         if not self.language:
-            pytest.skip("no language defined in PO file")
+            skip("no language defined in PO file")
 
         if self.language not in supported_languages:
-            pytest.skip(
+            skip(
                 "aspell dictionary for language {} not found.".format(self.language)
             )
 

@@ -1,4 +1,4 @@
-from py.test.collect import File, Item
+from pytest import File, Item
 
 from pytest_translations.config import MARKER_NAME
 from pytest_translations.po_spelling import PoSpellCheckingItem

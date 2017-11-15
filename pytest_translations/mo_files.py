@@ -2,7 +2,7 @@ import os
 import tempfile
 
 import shutil
-from py.test.collect import File, Item
+from pytest import File, Item
 
 from pytest_translations.config import MARKER_NAME
 from pytest_translations.utils import TranslationException, open_po_file, open_mo_file, msgfmt
