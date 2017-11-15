@@ -26,6 +26,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
     entry_points={
         'pytest11': [
@@ -33,7 +34,6 @@ setup(
         ]
     },
     install_requires=[
-        'py>=1.3.0',
         'polib>=1.0.5',
         'pyenchant>=1.6.0',
     ],
