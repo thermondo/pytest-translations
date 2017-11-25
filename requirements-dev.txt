@@ -1,4 +1,2 @@
 -e .
-polib==1.0.8
-pyenchant==1.6.11
-pytest==3.2.5
+pytest
