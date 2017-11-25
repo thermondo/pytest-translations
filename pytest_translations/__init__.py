@@ -1,6 +1,4 @@
 """A py.test plugin to check ``gettext`` ``po`` & ``mo`` files."""
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
 
 
 def pytest_addoption(parser):
