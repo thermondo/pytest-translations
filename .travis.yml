@@ -4,13 +4,10 @@ cache:
 - pip
 - apt
 python:
-- '2.7'
-- '3.4'
-- '3.5'
+- '3.6'
 addons:
   apt:
     packages:
-    - python-enchant
     - python3-enchant
     - aspell-en
     - aspell-de
