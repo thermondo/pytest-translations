@@ -15,13 +15,12 @@ addons:
     - aspell-en
     - aspell-de
 install:
-- pip install -U pip
+- pip install -U codecov
 - pip install -r requirements-dev.txt
-- pip install -U coveralls
 script:
-- coverage run --source="pytest_translations.py" -m "pytest"
+- coverage run --source="pytest_translations" -m "pytest"
 after_success:
-- coveralls
+- codecov
 deploy:
   provider: pypi
   user: codingjoe

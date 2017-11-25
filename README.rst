@@ -104,7 +104,7 @@ For example:
    :target: https://pypi.python.org/pypi/pytest-translations/
 .. |ci| image:: https://api.travis-ci.org/Thermondo/pytest-translations.svg?branch=master
    :target: https://travis-ci.org/Thermondo/pytest-translations
-.. |coverage| image:: https://coveralls.io/repos/Thermondo/pytest-translations/badge.svg?branch=master
-   :target: https://coveralls.io/r/Thermondo/pytest-translations
+.. |coverage| image:: https://codecov.io/gh/Thermondo/pytest-translations/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/Thermondo/pytest-translations
 .. |license| image:: https://img.shields.io/badge/license-APL_2-blue.svg
    :target: LICENSE
