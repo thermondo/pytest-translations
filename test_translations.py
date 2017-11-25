@@ -8,11 +8,6 @@ import pytest
 pytest_plugins = "pytester",
 
 
-def test_version():
-    import pytest_translations
-    assert pytest_translations.__version__
-
-
 class TestMo(object):
     @pytest.fixture
     def pomo(self, testdir):
