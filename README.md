@@ -2,7 +2,7 @@
 [![ci](https://api.travis-ci.org/Thermondo/pytest-translations.svg?branch=master)](https://travis-ci.org/Thermondo/pytest-translations)
 [![coverage](https://coveralls.io/repos/Thermondo/pytest-translations/badge.svg?branch=master)](https://coveralls.io/r/Thermondo/pytest-translations)
 [![code-health](https://landscape.io/github/Thermondo/pytest-translations/master/landscape.svg?style=flat)](https://landscape.io/github/Thermondo/pytest-translations/master)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![license](https://img.shields.io/badge/license-APL_2-blue.svg)](LICENSE)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Thermondo/pytest-translations?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # PyTest Translations
