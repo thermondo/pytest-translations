@@ -68,15 +68,16 @@ You also can execute only the translation-tests by using:
 
     py.test -m translations --translations
 
-Private World Lists
-~~~~~~~~~~~~~~~~~~~
+Private Word Lists
+~~~~~~~~~~~~~~~~~~
 
 You will almost certainly use words that are not included in the default
 dictionaries. That is why you can add your own word list that you want
 to add to the dictionary.
 
 You may do so by adding a plain text file where each line is a word.
-Capital words are case sensitive where lower case words are insensitive.
+Words beginning with a capital letter are case sensitive where lower case words
+are insensitive.
 
 There can be one file for each language contained in a single folder.
 The files should be named like the proper language code.
