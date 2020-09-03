@@ -8,9 +8,9 @@ from pytest_translations.config import MARKER_NAME
 from pytest_translations.utils import TranslationException, open_po_file, open_mo_file, msgfmt
 
 
-class MoFileItem(Item, File):
-    def __init__(self, path, parent):
-        super(MoFileItem, self).__init__(path, parent)
+class MoFileItem(File, Item):
+    def __init__(self, fspath, parent):
+        super().__init__(fspath, parent)
 
         if hasattr(self, 'add_marker'):
             self.add_marker(MARKER_NAME)
