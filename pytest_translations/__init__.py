@@ -10,6 +10,12 @@ def pytest_addoption(parser):
     )
 
 
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers", "translations: translation tests"
+    )
+
+
 def pytest_collect_file(path, parent):
     from .mo_files import MoFileItem
     from .po_files import PoFile
