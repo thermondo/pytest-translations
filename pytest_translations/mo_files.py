@@ -8,7 +8,7 @@ from pytest_translations.config import MARKER_NAME
 from pytest_translations.utils import TranslationException, open_po_file, open_mo_file, msgfmt
 
 
-class MoFileItem(File, Item):
+class MoFileItem(Item, File):
     def __init__(self, fspath, parent):
         super().__init__(fspath, parent)
 
