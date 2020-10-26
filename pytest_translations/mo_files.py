@@ -80,7 +80,7 @@ class MoFileItem(Item, File):
             return msg
 
         else:
-            return super(MoFileItem, self).repr_failure(excinfo)
+            return super().repr_failure(excinfo)
 
     def reportinfo(self):
         return (self.fspath, -1, "mo-test")

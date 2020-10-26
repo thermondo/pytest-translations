@@ -7,7 +7,7 @@ from pytest_translations.utils import TranslationException, open_po_file, msgfmt
 
 class PoFile(File):
     def __init__(self, fspath, parent):
-        super(PoFile, self).__init__(fspath, parent)
+        super().__init__(fspath, parent)
 
         if hasattr(self, 'add_marker'):
             self.add_marker(MARKER_NAME)
@@ -46,7 +46,7 @@ class PoFile(File):
 
 class PoBaseItem(Item):
     def __init__(self, name, parent):
-        super(PoBaseItem, self).__init__(name, parent)
+        super().__init__(name, parent)
         self.add_marker(MARKER_NAME)
 
     def repr_failure(self, excinfo):
@@ -63,7 +63,7 @@ class PoBaseItem(Item):
             return msg
 
         else:
-            return super(PoBaseItem, self).repr_failure(excinfo)
+            return super().repr_failure(excinfo)
 
 
 class PoUntranslatedItem(PoBaseItem):

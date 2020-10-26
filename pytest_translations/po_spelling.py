@@ -57,7 +57,7 @@ class PoSpellCheckingItem(Item):
         else:
             self.lang_dict = None
 
-        super(PoSpellCheckingItem, self).__init__(name, parent)
+        super().__init__(name, parent)
         self.add_marker(MARKER_NAME)
 
     def runtest(self):
@@ -118,7 +118,7 @@ class PoSpellCheckingItem(Item):
             return "\n".join(lines)
 
         else:
-            return super(PoSpellCheckingItem, self).repr_failure(excinfo)
+            return super().repr_failure(excinfo)
 
     def reportinfo(self):
         return (self.fspath, -1, 'po-spelling')
