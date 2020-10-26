@@ -246,7 +246,7 @@ class TestPoSpellcheck(object):
         result = testdir.runpytest('--translations', '-vvv', '-r', 's')
         result.stdout.fnmatch_lines([
             "*collected 4*",
-            "SKIP * no language defined in PO file",
+            "SKIPPED * no language defined in PO file",
         ])
 
     def test_language_catalog_missing(self, testdir):
@@ -265,7 +265,7 @@ class TestPoSpellcheck(object):
         result = testdir.runpytest('--translations', '-vvv', '-r', 's')
         result.stdout.fnmatch_lines([
             "*collected 4*",
-            "SKIP * aspell dictionary for language hr not found*",
+            "SKIPPED * aspell dictionary for language hr not found*",
         ])
 
     def test_python_format_placeholders(self, testdir):

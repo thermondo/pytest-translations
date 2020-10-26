@@ -9,8 +9,8 @@ from pytest_translations.utils import TranslationException, open_po_file, open_m
 
 
 class MoFileItem(Item, File):
-    def __init__(self, path, parent):
-        super(MoFileItem, self).__init__(path, parent)
+    def __init__(self, fspath, parent):
+        super().__init__(fspath, parent)
 
         if hasattr(self, 'add_marker'):
             self.add_marker(MARKER_NAME)
@@ -80,7 +80,7 @@ class MoFileItem(Item, File):
             return msg
 
         else:
-            return super(MoFileItem, self).repr_failure(excinfo)
+            return super().repr_failure(excinfo)
 
     def reportinfo(self):
         return (self.fspath, -1, "mo-test")

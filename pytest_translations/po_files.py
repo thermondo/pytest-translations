@@ -6,8 +6,8 @@ from pytest_translations.utils import TranslationException, open_po_file, msgfmt
 
 
 class PoFile(File):
-    def __init__(self, path, parent):
-        super(PoFile, self).__init__(path, parent)
+    def __init__(self, fspath, parent):
+        super().__init__(fspath, parent)
 
         if hasattr(self, 'add_marker'):
             self.add_marker(MARKER_NAME)
@@ -15,17 +15,17 @@ class PoFile(File):
             self.keywords[MARKER_NAME] = True
 
     def collect(self):
-        yield PoUntranslatedItem(
-            self.name,
-            self,
+        yield PoUntranslatedItem.from_parent(
+            name=self.name,
+            parent=self,
         )
-        yield PoFuzzyItem(
-            self.name,
-            self,
+        yield PoFuzzyItem.from_parent(
+            name=self.name,
+            parent=self,
         )
-        yield PoObsoleteItem(
-            self.name,
-            self,
+        yield PoObsoleteItem.from_parent(
+            name=self.name,
+            parent=self,
         )
         try:
             parsed = open_po_file(self.fspath)
@@ -36,17 +36,17 @@ class PoFile(File):
         else:
             language = parsed.metadata.get('Language', '')
             for line in parsed.translated_entries():
-                yield PoSpellCheckingItem(
-                    line,
-                    language,
-                    self.name,
-                    self,
+                yield PoSpellCheckingItem.from_parent(
+                    line=line,
+                    language=language,
+                    name=self.name,
+                    parent=self,
                 )
 
 
 class PoBaseItem(Item):
     def __init__(self, name, parent):
-        super(PoBaseItem, self).__init__(name, parent)
+        super().__init__(name, parent)
         self.add_marker(MARKER_NAME)
 
     def repr_failure(self, excinfo):
@@ -63,7 +63,7 @@ class PoBaseItem(Item):
             return msg
 
         else:
-            return super(PoBaseItem, self).repr_failure(excinfo)
+            return super().repr_failure(excinfo)
 
 
 class PoUntranslatedItem(PoBaseItem):
