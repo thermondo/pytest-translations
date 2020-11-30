@@ -28,12 +28,11 @@ jobs:
 
       - name: installing python dependencies
         run: |
-          pip install -U coverage
+          pip install -U codecov
           pip install -r requirements-dev.txt
 
       - name: running tests
         run: coverage run --source="pytest_translations" -m "pytest"
 
-      - uses: codecov/codecov-action@v1
-        with:
-          fail_ci_if_error: true
+      - name: uploading coverage
+        run: codecov --required
