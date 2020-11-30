@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+
+      - name: Cache pip downloads
+        uses: syphar/restore-pip-download-cache@v1
+
+      - name: Install system package dependencies
+        run: |
+          sudo apt-get install -y python3-enchant aspell-en aspell-de
+
+
+      - name: installing python dependencies
+        run: |
+          pip install -U codecov
+          pip install -r requirements-dev.txt
+
+      - name: running tests
+        run: coverage run --source="pytest_translations" -m "pytest"
+
+      - uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
