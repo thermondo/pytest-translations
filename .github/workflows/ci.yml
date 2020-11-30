@@ -26,11 +26,8 @@ jobs:
         run: |
           sudo apt-get install -y python3-enchant aspell-en aspell-de
 
-
       - name: installing python dependencies
-        run: |
-          pip install -U codecov
-          pip install -r requirements-dev.txt
+        run: pip install -r requirements-dev.txt
 
       - name: running tests
         run: coverage run --source="pytest_translations" -m "pytest"
