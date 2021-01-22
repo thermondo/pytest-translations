@@ -12,7 +12,7 @@ class TestMo(object):
     @pytest.fixture
     def pomo(self, testdir):
         pofile = testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             msgid "car"
@@ -29,7 +29,7 @@ class TestMo(object):
 
     def test_broken_file(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             msgid "car"
@@ -37,7 +37,7 @@ class TestMo(object):
             """
         )
         testdir.makefile(
-            'mo',
+            '.mo',
             """
             asdflkaj sdlkfaj
             """,
@@ -76,7 +76,7 @@ class TestMo(object):
         os.unlink(po)
 
         testdir.makefile(
-            'po',
+            '.po',
             """
             msgid ""
             msgstr ""
@@ -100,7 +100,7 @@ class TestMo(object):
 class TestPo(object):
     def test_uses_argument(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             msgid "car"
@@ -114,7 +114,7 @@ class TestPo(object):
 
     def test_broken_file(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             asdflkaj sdlkfaj
             """
@@ -127,7 +127,7 @@ class TestPo(object):
 
     def test_valid(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             msgid "car"
@@ -143,7 +143,7 @@ class TestPo(object):
 
     def test_missing_translation(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             msgid "car"
@@ -159,7 +159,7 @@ class TestPo(object):
 
     def test_fuzzy(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             #, fuzzy
@@ -177,7 +177,7 @@ class TestPo(object):
 
     def test_obsolete(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             #~ msgid "car"
@@ -194,7 +194,7 @@ class TestPo(object):
 
     def test_all(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             msgid "car2"
@@ -224,7 +224,7 @@ class TestPo(object):
 class TestPoSpellcheck(object):
     def test_broken_file(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             asdflkjasdf laskdjfasdf
             """
@@ -236,7 +236,7 @@ class TestPoSpellcheck(object):
 
     def test_language_missing_in_po(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             #: asdf.py:111
             msgid "meeting"
@@ -251,7 +251,7 @@ class TestPoSpellcheck(object):
 
     def test_language_catalog_missing(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             msgid ""
             msgstr ""
@@ -270,7 +270,7 @@ class TestPoSpellcheck(object):
 
     def test_python_format_placeholders(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             msgid ""
             msgstr ""
@@ -289,7 +289,7 @@ class TestPoSpellcheck(object):
 
     def test_pass(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             msgid ""
             msgstr ""
@@ -308,7 +308,7 @@ class TestPoSpellcheck(object):
 
     def test_fail(self, testdir):
         testdir.makefile(
-            'po',
+            '.po',
             """
             msgid ""
             msgstr ""
@@ -329,7 +329,7 @@ class TestPoSpellcheck(object):
 
     def test_wordlist(self, testdir, monkeypatch):
         testdir.makefile(
-            'po',
+            '.po',
             """
             msgid ""
             msgstr ""
