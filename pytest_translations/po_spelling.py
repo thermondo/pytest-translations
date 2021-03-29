@@ -80,6 +80,8 @@ class PoSpellCheckingItem(Item):
         text = re.sub('{.*?}', '', text)
         # 2. remove everything between %( and )
         text = re.sub('\%\(.*?\)', '', text)
+        # 3. remove &shy; html entity
+        text = text.replace('&shy;', '')
 
         tokenizer = get_tokenizer(
             chunkers=[

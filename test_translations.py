@@ -287,6 +287,25 @@ class TestPoSpellcheck(object):
             "*4 passed*",
         ])
 
+    def test_shy_entity(self, testdir):
+        testdir.makefile(
+            '.po',
+            """
+            msgid ""
+            msgstr ""
+            "Language: de\\n"
+
+            #: asdf.py:111
+            msgid "meeting"
+            msgstr "Ver&shy;ab&shy;redung"
+            """
+        )
+        result = testdir.runpytest('--translations', '-vvv', '-r', 's')
+        result.stdout.fnmatch_lines([
+            "*collected 4*",
+            "*4 passed*",
+        ])
+
     def test_pass(self, testdir):
         testdir.makefile(
             '.po',
