@@ -103,8 +103,8 @@ For example:
 
 .. |version| image:: https://img.shields.io/pypi/v/pytest-translations.svg
    :target: https://pypi.python.org/pypi/pytest-translations/
-.. |ci| image:: https://api.travis-ci.org/Thermondo/pytest-translations.svg?branch=master
-   :target: https://travis-ci.org/Thermondo/pytest-translations
+.. |ci| image:: https://github.com/Thermondo/pytest-translations/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/Thermondo/pytest-translations/actions/workflows/ci.yml
 .. |coverage| image:: https://codecov.io/gh/Thermondo/pytest-translations/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/Thermondo/pytest-translations
 .. |license| image:: https://img.shields.io/badge/license-APL_2-blue.svg
