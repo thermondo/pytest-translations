@@ -47,7 +47,7 @@ On Mac you can use brew to install:
 
 .. code:: bash
 
-    brew install aspell --with-lang-{en|de|CHOSE YOUR LANGUAGE CODES}
+    brew install aspell
     brew install enchant
 
 Usage
