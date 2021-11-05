@@ -79,7 +79,7 @@ class PoSpellCheckingItem(Item):
         # 1. replace everything between curly braces
         text = re.sub('{.*?}', '', text)
         # 2. remove everything between %( and )
-        text = re.sub('\%\(.*?\)', '', text)
+        text = re.sub(r'\%\(.*?\)', '', text)
         # 3. remove &shy; html entity
         text = text.replace('&shy;', '')
 
