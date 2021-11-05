@@ -14,10 +14,6 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
-        pytest-version: [
-          "pytest>=6.1,<6.2",
-          "pytest>=6.2,<6.3"
-        ]
 
     steps:
       - uses: actions/checkout@v2
@@ -38,10 +34,6 @@ jobs:
         run: |
           pip install -U codecov
           pip install -r requirements-dev.txt
-
-      - name: installing ${{ matrix.pytest-version }}
-        run: |
-          pip install "${{ matrix.pytest-version }}"
 
       - name: running tests
         run: coverage run --source="pytest_translations" -m "pytest"
