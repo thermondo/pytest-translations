@@ -9,7 +9,6 @@ authors = ["thermondo <opensource@thermondo.de>"]
 readme = "README.rst"
 repository = "https://github.com/Thermondo/pytest-translations"
 license = "Apache-2.0"
-
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Web Environment",
@@ -29,10 +28,10 @@ pytest = ">=7"
 
 [tool.poetry.group.dev.dependencies]
 codecov = "~2"
+pyenchant = "~3"
 
 [tool.poetry.plugins]
 pytest11 = { pytest_translations = "pytest_translations" }
-
 
 [tool.poetry-dynamic-versioning]
 enable = true
