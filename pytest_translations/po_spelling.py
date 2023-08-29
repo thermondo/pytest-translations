@@ -8,10 +8,7 @@ from pytest_translations.utils import TranslationException
 
 try:
     import enchant
-    from enchant.tokenize import (
-        get_tokenizer, URLFilter,
-        EmailFilter, HTMLChunker
-    )
+    from enchant.tokenize import EmailFilter, HTMLChunker, URLFilter, get_tokenizer
 except ImportError:
     enchant = None
 
@@ -21,22 +18,17 @@ def is_enchant_installed():
 
 
 if enchant:
-    supported_languages = [
-        name.split('_')[0]
-        for name, _ in enchant.list_dicts()
-    ]
+    supported_languages = [name.split("_")[0] for name, _ in enchant.list_dicts()]
 else:
     supported_languages = []
 
 
 def word_lists():
-    PWL = os.getenv('PYTEST_TRANSLATIONS_PRIVATE_WORD_LIST')
+    PWL = os.getenv("PYTEST_TRANSLATIONS_PRIVATE_WORD_LIST")
 
     if enchant and PWL and os.path.exists(PWL):
         return {
-            fn: os.path.join(PWL, fn)
-            for fn in os.listdir(PWL)
-            if not os.path.isdir(fn)
+            fn: os.path.join(PWL, fn) for fn in os.listdir(PWL) if not os.path.isdir(fn)
         }
 
     else:
@@ -68,20 +60,18 @@ class PoSpellCheckingItem(Item):
             skip("no language defined in PO file")
 
         if self.language not in supported_languages:
-            skip(
-                "aspell dictionary for language {} not found.".format(self.language)
-            )
+            skip("aspell dictionary for language {} not found.".format(self.language))
 
         text = self.line.msgstr
 
         # remove python format placeholders, old and new,
         # where it's a problem.
         # 1. replace everything between curly braces
-        text = re.sub('{.*?}', '', text)
+        text = re.sub("{.*?}", "", text)
         # 2. remove everything between %( and )
-        text = re.sub(r'\%\(.*?\)', '', text)
+        text = re.sub(r"\%\(.*?\)", "", text)
         # 3. remove &shy; html entity
-        text = text.replace('&shy;', '')
+        text = text.replace("&shy;", "")
 
         tokenizer = get_tokenizer(
             chunkers=[
@@ -94,26 +84,19 @@ class PoSpellCheckingItem(Item):
         )
         tokens = tokenizer(text)
 
-        errors = [
-            t
-            for t, _ in tokens
-            if not self.lang_dict.check(t)
-            ]
+        errors = [t for t, _ in tokens if not self.lang_dict.check(t)]
 
         if errors:
             raise TranslationException(
-                "Spell checking failed: {}".format(', '.join(errors)),
+                "Spell checking failed: {}".format(", ".join(errors)),
                 self.line.msgstr,
-                [
-                    (t, self.lang_dict.suggest(t))
-                    for t in errors
-                    ]
+                [(t, self.lang_dict.suggest(t)) for t in errors],
             )
 
     def repr_failure(self, excinfo):
         if isinstance(excinfo.value, TranslationException):
             msg, line, wrong = excinfo.value.args
-            lines = [msg, "%s" % self.fspath, "msgstr \"%s\"" % line]
+            lines = [msg, "%s" % self.fspath, 'msgstr "%s"' % line]
             for i in wrong:
                 lines.append("%s: %s" % i)
 
@@ -123,4 +106,4 @@ class PoSpellCheckingItem(Item):
             return super().repr_failure(excinfo)
 
     def reportinfo(self):
-        return (self.fspath, -1, 'po-spelling')
+        return (self.fspath, -1, "po-spelling")
