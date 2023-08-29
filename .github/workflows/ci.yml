@@ -39,4 +39,4 @@ jobs:
         run: coverage run --source="pytest_translations" -m "pytest"
 
       - name: uploading coverage
-        run: codecov --required
+        run: codecov
