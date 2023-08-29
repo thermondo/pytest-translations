@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "pytest-translations"
+# just a dummy version
+# will be overwritten from the git tag,
+# see https://github.com/mtkennerly/poetry-dynamic-versioning
+version = "0.0.0"
+description = "Test your translation files."
+authors = ["thermondo <opensource@thermondo.de>"]
+readme = "README.rst"
+repository = "https://github.com/Thermondo/pytest-translations"
+license = "Apache-2.0"
+
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Web Environment",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3",
+]
+packages = [{ include = "pytest_translations" }]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+polib = ">=1.0.5"
+pyenchant = ">=1.6.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=6.1"
+codecov = "^2.1.13"
+
+[tool.poetry.plugins]
+pytest11 = { pytest_translations = "pytest_translations" }
+
+
+[tool.poetry-dynamic-versioning]
+enable = true
+pattern = "^(?P<base>\\d+(\\.\\d+)*)" # tag without `v` prefix
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry.core.masonry.api"

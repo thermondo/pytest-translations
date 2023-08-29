@@ -10,10 +10,10 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
       - uses: actions/checkout@v2
@@ -22,21 +22,22 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Cache pip downloads
-        uses: syphar/restore-pip-download-cache@v1
+          cache: pip
 
       - name: Install system package dependencies
         run: |
           sudo apt-get install -y python3-enchant aspell-en aspell-de
 
-      - name: installing python dependencies
+      - name: install poetry
         run: |
-          pip install -U codecov
-          pip install -r requirements-dev.txt
+          pip install pipx && pipx install poetry~=1.6
+
+      - name: install python dependencies
+        run: |
+          poetry install --no-interaction
 
       - name: running tests
         run: coverage run --source="pytest_translations" -m "pytest"
 
       - name: uploading coverage
-        run: codecov --required
+        run: codecov
