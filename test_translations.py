@@ -20,7 +20,9 @@ class TestMo(object):
             """
         )
 
-        mofile = pofile.with_suffix(".mo")
+        p, ext = os.path.splitext(str(pofile))
+        mofile = p + ".mo"
+
         polib.pofile(str(pofile)).save_as_mofile(mofile)
 
         return str(pofile), str(mofile)
