@@ -29,7 +29,7 @@ class MoItem(Item):
         self.add_marker(MARKER_NAME)
 
     def runtest(self):
-        po_path, _ = os.path.splitext(str(self.fspath))
+        po_path, _ = os.path.splitext(str(self.path))
         po_path += ".po"
 
         if not os.path.exists(po_path):
@@ -46,7 +46,7 @@ class MoItem(Item):
             test_file = os.path.join(temp_dir, 'test.mo')
             po_file.save_as_mofile(test_file)
 
-            original_parsed = open_mo_file(self.fspath)
+            original_parsed = open_mo_file(self.path)
             test_parsed = open_mo_file(test_file)
 
             if len(original_parsed) != len(test_parsed):
@@ -94,4 +94,4 @@ class MoItem(Item):
             return super().repr_failure(excinfo)
 
     def reportinfo(self):
-        return (self.fspath, -1, "mo-test")
+        return (self.path, -1, "mo-test")
