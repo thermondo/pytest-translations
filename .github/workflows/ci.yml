@@ -36,7 +36,7 @@ jobs:
           poetry install --no-interaction
 
       - name: running tests
-        run: coverage run --source="pytest_translations" -m "pytest"
+        run: poetry run coverage run --source="pytest_translations" -m "pytest"
 
       - name: uploading coverage
-        run: codecov
+        run: poetry run codecov
