@@ -6,8 +6,8 @@ from pytest_translations.utils import TranslationException, open_po_file, msgfmt
 
 
 class PoFile(File):
-    def __init__(self, fspath, parent):
-        super().__init__(fspath, parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         if hasattr(self, 'add_marker'):
             self.add_marker(MARKER_NAME)
