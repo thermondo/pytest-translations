@@ -8,17 +8,28 @@ from pytest_translations.config import MARKER_NAME
 from pytest_translations.utils import TranslationException, open_po_file, open_mo_file, msgfmt
 
 
-class MoFileItem(Item, File):
-    def __init__(self, fspath, parent):
-        super().__init__(fspath, parent)
-
+class MoFile(File):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         if hasattr(self, 'add_marker'):
             self.add_marker(MARKER_NAME)
         else:
             self.keywords[MARKER_NAME] = True
 
+    def collect(self):
+        yield MoItem.from_parent(
+            name=self.name,
+            parent=self,
+        )
+
+
+class MoItem(Item):
+    def __init__(self, name, parent):
+        super().__init__(name, parent)
+        self.add_marker(MARKER_NAME)
+
     def runtest(self):
-        po_path, _ = os.path.splitext(str(self.fspath))
+        po_path, _ = os.path.splitext(str(self.path))
         po_path += ".po"
 
         if not os.path.exists(po_path):
@@ -35,7 +46,7 @@ class MoFileItem(Item, File):
             test_file = os.path.join(temp_dir, 'test.mo')
             po_file.save_as_mofile(test_file)
 
-            original_parsed = open_mo_file(self.fspath)
+            original_parsed = open_mo_file(self.path)
             test_parsed = open_mo_file(test_file)
 
             if len(original_parsed) != len(test_parsed):
@@ -83,4 +94,4 @@ class MoFileItem(Item, File):
             return super().repr_failure(excinfo)
 
     def reportinfo(self):
-        return (self.fspath, -1, "mo-test")
+        return (self.path, -1, "mo-test")

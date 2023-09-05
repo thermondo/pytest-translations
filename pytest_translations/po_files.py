@@ -6,8 +6,8 @@ from pytest_translations.utils import TranslationException, open_po_file, msgfmt
 
 
 class PoFile(File):
-    def __init__(self, fspath, parent):
-        super().__init__(fspath, parent)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
         if hasattr(self, 'add_marker'):
             self.add_marker(MARKER_NAME)
@@ -28,7 +28,7 @@ class PoFile(File):
             parent=self,
         )
         try:
-            parsed = open_po_file(self.fspath)
+            parsed = open_po_file(self.path)
         except TranslationException:
             # if the PO file is invalid, we can't do spellchecking.
             # the other tests will fail then, but this here is the collection phase.
@@ -53,7 +53,7 @@ class PoBaseItem(Item):
         if isinstance(excinfo.value, TranslationException):
             msg, wrong = excinfo.value.args
 
-            msg += "\n{0}".format(self.fspath)
+            msg += "\n{0}".format(self.path)
 
             msg += '\n' + '\n'.join(
                 msgfmt(i)
@@ -68,7 +68,7 @@ class PoBaseItem(Item):
 
 class PoUntranslatedItem(PoBaseItem):
     def runtest(self):
-        parsed = open_po_file(self.fspath)
+        parsed = open_po_file(self.path)
 
         untranslated = parsed.untranslated_entries()
 
@@ -81,12 +81,12 @@ class PoUntranslatedItem(PoBaseItem):
         )
 
     def reportinfo(self):
-        return (self.fspath, -1, "po-untranslated")
+        return (self.path, -1, "po-untranslated")
 
 
 class PoObsoleteItem(PoBaseItem):
     def runtest(self):
-        parsed = open_po_file(self.fspath)
+        parsed = open_po_file(self.path)
 
         obsolete = parsed.obsolete_entries()
 
@@ -99,12 +99,12 @@ class PoObsoleteItem(PoBaseItem):
         )
 
     def reportinfo(self):
-        return (self.fspath, -1, "po-obsolete")
+        return (self.path, -1, "po-obsolete")
 
 
 class PoFuzzyItem(PoBaseItem):
     def runtest(self):
-        parsed = open_po_file(self.fspath)
+        parsed = open_po_file(self.path)
 
         fuzzy = parsed.fuzzy_entries()
 
@@ -117,4 +117,4 @@ class PoFuzzyItem(PoBaseItem):
         )
 
     def reportinfo(self):
-        return (self.fspath, -1, "po-fuzzy")
+        return (self.path, -1, "po-fuzzy")
