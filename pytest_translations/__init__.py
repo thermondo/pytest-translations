@@ -14,16 +14,16 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "translations: translation tests")
 
 
-def pytest_collect_file(path, parent):
-    from .mo_files import MoFileItem
+def pytest_collect_file(file_path, parent):
+    from .mo_files import MoFile
     from .po_files import PoFile
 
     config = parent.config
     if config.option.translations:
-        if path.ext == ".mo":
-            return MoFileItem.from_parent(
-                fspath=path,
+        if file_path.suffix == ".mo":
+            return MoFile.from_parent(
+                path=file_path,
                 parent=parent,
             )
-        elif path.ext == ".po":
-            return PoFile.from_parent(fspath=path, parent=parent)
+        elif file_path.suffix == ".po":
+            return PoFile.from_parent(path=file_path, parent=parent)

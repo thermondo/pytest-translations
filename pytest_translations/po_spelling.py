@@ -96,7 +96,7 @@ class PoSpellCheckingItem(Item):
     def repr_failure(self, excinfo):
         if isinstance(excinfo.value, TranslationException):
             msg, line, wrong = excinfo.value.args
-            lines = [msg, "%s" % self.fspath, 'msgstr "%s"' % line]
+            lines = [msg, str(self.path), 'msgstr "%s"' % line]
             for i in wrong:
                 lines.append("%s: %s" % i)
 
@@ -106,4 +106,4 @@ class PoSpellCheckingItem(Item):
             return super().repr_failure(excinfo)
 
     def reportinfo(self):
-        return (self.fspath, -1, "po-spelling")
+        return (self.path, -1, "po-spelling")
