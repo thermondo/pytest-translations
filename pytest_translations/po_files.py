@@ -2,14 +2,14 @@ from pytest import File, Item
 
 from pytest_translations.config import MARKER_NAME
 from pytest_translations.po_spelling import PoSpellCheckingItem
-from pytest_translations.utils import TranslationException, open_po_file, msgfmt
+from pytest_translations.utils import TranslationException, msgfmt, open_po_file
 
 
 class PoFile(File):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        if hasattr(self, 'add_marker'):
+        if hasattr(self, "add_marker"):
             self.add_marker(MARKER_NAME)
         else:
             self.keywords[MARKER_NAME] = True
@@ -34,7 +34,7 @@ class PoFile(File):
             # the other tests will fail then, but this here is the collection phase.
             pass
         else:
-            language = parsed.metadata.get('Language', '')
+            language = parsed.metadata.get("Language", "")
             for line in parsed.translated_entries():
                 yield PoSpellCheckingItem.from_parent(
                     line=line,
@@ -55,10 +55,7 @@ class PoBaseItem(Item):
 
             msg += "\n{0}".format(self.path)
 
-            msg += '\n' + '\n'.join(
-                msgfmt(i)
-                for i in wrong
-            )
+            msg += "\n" + "\n".join(msgfmt(i) for i in wrong)
 
             return msg
 
@@ -76,7 +73,7 @@ class PoUntranslatedItem(PoBaseItem):
             return
 
         raise TranslationException(
-            'found untranslated entries in file.',
+            "found untranslated entries in file.",
             untranslated,
         )
 
@@ -94,7 +91,7 @@ class PoObsoleteItem(PoBaseItem):
             return
 
         raise TranslationException(
-            'found obsolete entries in file.',
+            "found obsolete entries in file.",
             obsolete,
         )
 
@@ -112,7 +109,7 @@ class PoFuzzyItem(PoBaseItem):
             return
 
         raise TranslationException(
-            'found fuzzy entries in file.',
+            "found fuzzy entries in file.",
             fuzzy,
         )
 

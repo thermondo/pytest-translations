@@ -1,1 +1,1 @@
-MARKER_NAME = 'translations'
+MARKER_NAME = "translations"

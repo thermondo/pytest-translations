@@ -4,16 +4,14 @@
 def pytest_addoption(parser):
     group = parser.getgroup("general")
     group.addoption(
-        '--translations',
-        action='store_true',
-        help="perform some checks on .mo and .po files"
+        "--translations",
+        action="store_true",
+        help="perform some checks on .mo and .po files",
     )
 
 
 def pytest_configure(config):
-    config.addinivalue_line(
-        "markers", "translations: translation tests"
-    )
+    config.addinivalue_line("markers", "translations: translation tests")
 
 
 def pytest_collect_file(file_path, parent):
@@ -22,13 +20,10 @@ def pytest_collect_file(file_path, parent):
 
     config = parent.config
     if config.option.translations:
-        if file_path.suffix == '.mo':
+        if file_path.suffix == ".mo":
             return MoFile.from_parent(
                 path=file_path,
                 parent=parent,
             )
-        elif file_path.suffix == '.po':
-            return PoFile.from_parent(
-                path=file_path,
-                parent=parent
-            )
+        elif file_path.suffix == ".po":
+            return PoFile.from_parent(path=file_path, parent=parent)
